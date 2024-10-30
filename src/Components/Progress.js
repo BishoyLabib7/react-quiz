@@ -1,4 +1,7 @@
-function Progress({ index, numQuestions, point, answer, maxPoints }) {
+import { useQuize } from "../context/QuizeProvider";
+
+function Progress() {
+  const { index, numQuestions, point, answer, maxPoints } = useQuize();
   return (
     <div className="progress">
       <progress
