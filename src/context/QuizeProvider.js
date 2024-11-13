@@ -81,11 +81,21 @@ function QuizeProvider({ children }) {
 
   useEffect(function () {
     dispatch({ type: "dataLoading" });
-
-    fetch("http://localhost:9000/questions")
-      .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
-      .catch((err) => dispatch({ type: "dataFaild" }));
+    async function fetchDate() {
+      try {
+        const res = await fetch(
+          "https://bishoylabib7.github.io/jsonAPI/questions.json"
+        );
+         if (!res.ok) {
+      throw new Error(`Response status: ${res.status}`);
+    }
+        const data = await res.json();
+        dispatch({ type: "dataReceived", payload: data.questions });
+      } catch (err) {
+        dispatch({ type: "dataFaild" });
+      }
+    }
+    fetchDate();
   }, []);
 
   return (
